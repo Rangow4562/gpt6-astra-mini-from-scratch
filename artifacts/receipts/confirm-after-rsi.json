@@ -1,0 +1,214 @@
+{
+  "by_family": {
+    "absolute": {
+      "solved": 0,
+      "tasks": 1,
+      "tests_passed": 0,
+      "tests_total": 3
+    },
+    "double": {
+      "solved": 0,
+      "tasks": 1,
+      "tests_passed": 0,
+      "tests_total": 3
+    },
+    "even": {
+      "solved": 0,
+      "tasks": 1,
+      "tests_passed": 0,
+      "tests_total": 3
+    },
+    "increment": {
+      "solved": 0,
+      "tasks": 1,
+      "tests_passed": 0,
+      "tests_total": 3
+    },
+    "list_sum": {
+      "solved": 0,
+      "tasks": 1,
+      "tests_passed": 0,
+      "tests_total": 3
+    },
+    "nonnegative": {
+      "solved": 0,
+      "tasks": 1,
+      "tests_passed": 0,
+      "tests_total": 3
+    },
+    "reverse": {
+      "solved": 1,
+      "tasks": 1,
+      "tests_passed": 3,
+      "tests_total": 3
+    },
+    "square": {
+      "solved": 0,
+      "tasks": 1,
+      "tests_passed": 0,
+      "tests_total": 3
+    }
+  },
+  "checkpoint": "runs\\self-improve-reverse-001\\checkpoint-cycle-01",
+  "checkpoint_sha256": "8b874911763a00197009f55768680330cb8c5b062353a20de82857b1a2fb6c97",
+  "elapsed_seconds": 3.455,
+  "episodes": [
+    {
+      "evaluation": {
+        "message": "invalid syntax (<unknown>, line 4)",
+        "pass_fraction": 0.0,
+        "passed": false,
+        "status": "invalid",
+        "tests_passed": 0,
+        "tests_total": 3
+      },
+      "family": "increment",
+      "generated_completion": "\n    return reverse text sxtrn f f 1\n",
+      "generated_tokens": 38,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Return x plus one.\ndef increment_pezhott(x):",
+      "reference_completion": "\n    return x + 1\n",
+      "task_id": "confirm-increment-000"
+    },
+    {
+      "evaluation": {
+        "message": "invalid syntax (<unknown>, line 4)",
+        "pass_fraction": 0.0,
+        "passed": false,
+        "status": "invalid",
+        "tests_passed": 0,
+        "tests_total": 3
+      },
+      "family": "double",
+      "generated_completion": "\n    return x f\n",
+      "generated_tokens": 17,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Return two times x.\ndef double_vhutuxd(x):",
+      "reference_completion": "\n    return x * 2\n",
+      "task_id": "confirm-double-000"
+    },
+    {
+      "evaluation": {
+        "message": "unmatched ')' (<unknown>, line 5)",
+        "pass_fraction": 0.0,
+        "passed": false,
+        "status": "invalid",
+        "tests_passed": 0,
+        "tests_total": 3
+      },
+      "family": "square",
+      "generated_completion": "\n    reverse r(text):\n    return text):\n",
+      "generated_tokens": 41,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Multiply x by itself.\ndef square_hvcxrov(x):",
+      "reference_completion": "\n    return x * x\n",
+      "task_id": "confirm-square-000"
+    },
+    {
+      "evaluation": {
+        "message": "invalid syntax (<unknown>, line 4)",
+        "pass_fraction": 0.0,
+        "passed": false,
+        "status": "invalid",
+        "tests_passed": 0,
+        "tests_total": 3
+      },
+      "family": "absolute",
+      "generated_completion": "\n    return tex ire-x ire-x\n",
+      "generated_tokens": 29,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Make a negative x positive.\ndef absolute_rpxnino(x):",
+      "reference_completion": "\n    return -x if x < 0 else x\n",
+      "task_id": "confirm-absolute-000"
+    },
+    {
+      "evaluation": {
+        "message": "invalid syntax (<unknown>, line 4)",
+        "pass_fraction": 0.0,
+        "passed": false,
+        "status": "invalid",
+        "tests_passed": 0,
+        "tests_total": 3
+      },
+      "family": "nonnegative",
+      "generated_completion": "\n    return se f 1\n",
+      "generated_tokens": 20,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Return zero when x is negative.\ndef nonnegative_swjpruv(x):",
+      "reference_completion": "\n    return x if x > 0 else 0\n",
+      "task_id": "confirm-nonnegative-000"
+    },
+    {
+      "evaluation": {
+        "message": "'[' was never closed (<unknown>, line 4)",
+        "pass_fraction": 0.0,
+        "passed": false,
+        "status": "invalid",
+        "tests_passed": 0,
+        "tests_total": 3
+      },
+      "family": "even",
+      "generated_completion": "\n    return text[:\n",
+      "generated_tokens": 20,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Return whether x is even.\ndef even_zfsvekw(x):",
+      "reference_completion": "\n    return x % 2 == 0\n",
+      "task_id": "confirm-even-000"
+    },
+    {
+      "evaluation": {
+        "message": "",
+        "pass_fraction": 1.0,
+        "passed": true,
+        "status": "passed",
+        "tests_passed": 3,
+        "tests_total": 3
+      },
+      "family": "reverse",
+      "generated_completion": "\n    return text[::-1]\n",
+      "generated_tokens": 23,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Reverse the string.\ndef reverse_ulniuey(text):",
+      "reference_completion": "\n    return text[::-1]\n",
+      "task_id": "confirm-reverse-000"
+    },
+    {
+      "evaluation": {
+        "message": "invalid syntax (<unknown>, line 4)",
+        "pass_fraction": 0.0,
+        "passed": false,
+        "status": "invalid",
+        "tests_passed": 0,
+        "tests_total": 3
+      },
+      "family": "list_sum",
+      "generated_completion": "\n    reversext 1\n",
+      "generated_tokens": 18,
+      "hit_token_cap": false,
+      "prompt": "# Complete this Python function.\n# Return the sum of values.\ndef list_sum_xzxzscy(values):",
+      "reference_completion": "\n    return sum(values)\n",
+      "task_id": "confirm-list_sum-000"
+    }
+  ],
+  "inference": {
+    "active_loops": 2,
+    "families": "all",
+    "greedy": true,
+    "max_new_tokens": 48,
+    "seed": 2026
+  },
+  "peak_vram_gib": null,
+  "schema_version": "1.0",
+  "split": "confirm",
+  "status": "complete",
+  "summary": {
+    "pass_at_1": 0.125,
+    "tasks_solved": 1,
+    "tasks_total": 8,
+    "test_accuracy": 0.125,
+    "tests_passed": 3,
+    "tests_total": 24,
+    "token_cap_hits": 0,
+    "valid_programs": 1
+  }
+}

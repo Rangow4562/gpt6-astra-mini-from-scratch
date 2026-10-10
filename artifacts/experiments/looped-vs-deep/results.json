@@ -1,0 +1,783 @@
+{
+  "schema_version": "1.0",
+  "status": "complete",
+  "research_question": "At teaching scale, does looping beat depth at equal parameters, and does depth beat looping at equal applications?",
+  "arms": {
+    "looped-2x": {
+      "vocab_size": 260,
+      "dim": 96,
+      "heads": 3,
+      "mlp_hidden": 256,
+      "first_blocks": 1,
+      "stack_blocks": 3,
+      "last_blocks": 1,
+      "loops": 2,
+      "depth_policy": "fixed",
+      "inject_input": true,
+      "exit_threshold": 0.5,
+      "max_sequence_length": 128,
+      "rope_base": 10000.0
+    },
+    "deep-same-params": {
+      "vocab_size": 260,
+      "dim": 96,
+      "heads": 3,
+      "mlp_hidden": 256,
+      "first_blocks": 1,
+      "stack_blocks": 3,
+      "last_blocks": 1,
+      "loops": 1,
+      "depth_policy": "fixed",
+      "inject_input": false,
+      "exit_threshold": 0.5,
+      "max_sequence_length": 128,
+      "rope_base": 10000.0
+    },
+    "deep-same-applications": {
+      "vocab_size": 260,
+      "dim": 96,
+      "heads": 3,
+      "mlp_hidden": 256,
+      "first_blocks": 1,
+      "stack_blocks": 6,
+      "last_blocks": 1,
+      "loops": 1,
+      "depth_policy": "fixed",
+      "inject_input": false,
+      "exit_threshold": 0.5,
+      "max_sequence_length": 128,
+      "rope_base": 10000.0
+    }
+  },
+  "structural_holdout": [
+    [
+      "neg",
+      "neg",
+      "add"
+    ],
+    [
+      "neg",
+      "add",
+      "abs"
+    ],
+    [
+      "sub",
+      "neg",
+      "add"
+    ],
+    [
+      "sub",
+      "sub",
+      "mul"
+    ],
+    [
+      "abs",
+      "sub",
+      "neg"
+    ],
+    [
+      "abs",
+      "sub",
+      "sub"
+    ],
+    [
+      "sub",
+      "add",
+      "neg"
+    ],
+    [
+      "abs",
+      "add",
+      "neg"
+    ],
+    [
+      "add",
+      "abs",
+      "abs"
+    ],
+    [
+      "neg",
+      "add",
+      "add"
+    ],
+    [
+      "sub",
+      "add",
+      "mul"
+    ],
+    [
+      "abs",
+      "mul",
+      "add"
+    ],
+    [
+      "neg",
+      "neg",
+      "abs"
+    ],
+    [
+      "add",
+      "abs",
+      "mul"
+    ],
+    [
+      "neg",
+      "mul",
+      "add"
+    ],
+    [
+      "abs",
+      "neg",
+      "add"
+    ],
+    [
+      "add",
+      "abs",
+      "neg"
+    ],
+    [
+      "abs",
+      "abs",
+      "mul"
+    ],
+    [
+      "neg",
+      "sub",
+      "add"
+    ],
+    [
+      "sub",
+      "mul",
+      "mul"
+    ],
+    [
+      "abs",
+      "neg",
+      "sub"
+    ],
+    [
+      "mul",
+      "neg",
+      "neg"
+    ],
+    [
+      "abs",
+      "neg",
+      "mul"
+    ],
+    [
+      "add",
+      "sub",
+      "neg"
+    ],
+    [
+      "add",
+      "abs",
+      "sub"
+    ],
+    [
+      "sub",
+      "sub",
+      "neg"
+    ],
+    [
+      "add",
+      "mul",
+      "abs"
+    ],
+    [
+      "neg",
+      "add",
+      "neg"
+    ],
+    [
+      "mul",
+      "mul",
+      "abs"
+    ],
+    [
+      "mul",
+      "mul",
+      "sub"
+    ],
+    [
+      "mul",
+      "add",
+      "add"
+    ],
+    [
+      "mul",
+      "neg",
+      "add"
+    ]
+  ],
+  "device": "cpu",
+  "steps": 120,
+  "batch_size": 16,
+  "learning_rate": 0.002,
+  "seeds": [
+    11,
+    22
+  ],
+  "elapsed_seconds": 304.012,
+  "runs": [
+    {
+      "arm": "looped-2x",
+      "seed": 11,
+      "steps": 120,
+      "batch_size": 16,
+      "tokens_seen": 185566,
+      "elapsed_seconds": 41.83,
+      "parameter_counts": {
+        "total": 597408,
+        "distinct_block_parameters": 553920,
+        "block_applications_per_token": 8,
+        "deep_block_equivalent_parameters": 1107840
+      },
+      "before": {
+        "target_loss": 5.632235305664216,
+        "target_perplexity": 279.2857093423749,
+        "target_byte_accuracy": 0.0054667788057190915,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 0.5749696451431192,
+        "target_perplexity": 1.7770765831899666,
+        "target_byte_accuracy": 0.8036164844407064,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.63166618347168,
+          "tokens_seen": 1541
+        },
+        {
+          "step": 10,
+          "training_loss": 3.8096864223480225,
+          "tokens_seen": 15512
+        },
+        {
+          "step": 20,
+          "training_loss": 3.310366630554199,
+          "tokens_seen": 30951
+        },
+        {
+          "step": 30,
+          "training_loss": 2.9799234867095947,
+          "tokens_seen": 46510
+        },
+        {
+          "step": 40,
+          "training_loss": 2.677485704421997,
+          "tokens_seen": 61996
+        },
+        {
+          "step": 50,
+          "training_loss": 2.386712074279785,
+          "tokens_seen": 77335
+        },
+        {
+          "step": 60,
+          "training_loss": 2.0909080505371094,
+          "tokens_seen": 92822
+        },
+        {
+          "step": 70,
+          "training_loss": 1.7203668355941772,
+          "tokens_seen": 108312
+        },
+        {
+          "step": 80,
+          "training_loss": 1.3593772649765015,
+          "tokens_seen": 123823
+        },
+        {
+          "step": 90,
+          "training_loss": 1.1016322374343872,
+          "tokens_seen": 139285
+        },
+        {
+          "step": 100,
+          "training_loss": 0.8343991041183472,
+          "tokens_seen": 154707
+        },
+        {
+          "step": 110,
+          "training_loss": 0.5967406630516052,
+          "tokens_seen": 170145
+        },
+        {
+          "step": 120,
+          "training_loss": 0.48055601119995117,
+          "tokens_seen": 185566
+        }
+      ]
+    },
+    {
+      "arm": "looped-2x",
+      "seed": 22,
+      "steps": 120,
+      "batch_size": 16,
+      "tokens_seen": 185400,
+      "elapsed_seconds": 42.616,
+      "parameter_counts": {
+        "total": 597408,
+        "distinct_block_parameters": 553920,
+        "block_applications_per_token": 8,
+        "deep_block_equivalent_parameters": 1107840
+      },
+      "before": {
+        "target_loss": 5.483516110784914,
+        "target_perplexity": 240.69151932461523,
+        "target_byte_accuracy": 0.0,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 1.4913922535687332,
+        "target_perplexity": 4.443277383437656,
+        "target_byte_accuracy": 0.5325719120135364,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.475104808807373,
+          "tokens_seen": 1553
+        },
+        {
+          "step": 10,
+          "training_loss": 3.789576530456543,
+          "tokens_seen": 15444
+        },
+        {
+          "step": 20,
+          "training_loss": 3.331043004989624,
+          "tokens_seen": 30858
+        },
+        {
+          "step": 30,
+          "training_loss": 3.179861307144165,
+          "tokens_seen": 46358
+        },
+        {
+          "step": 40,
+          "training_loss": 3.0360586643218994,
+          "tokens_seen": 61826
+        },
+        {
+          "step": 50,
+          "training_loss": 2.929471492767334,
+          "tokens_seen": 77335
+        },
+        {
+          "step": 60,
+          "training_loss": 2.8535141944885254,
+          "tokens_seen": 92791
+        },
+        {
+          "step": 70,
+          "training_loss": 2.578305244445801,
+          "tokens_seen": 108252
+        },
+        {
+          "step": 80,
+          "training_loss": 2.211221933364868,
+          "tokens_seen": 123713
+        },
+        {
+          "step": 90,
+          "training_loss": 2.0843923091888428,
+          "tokens_seen": 139209
+        },
+        {
+          "step": 100,
+          "training_loss": 1.7400894165039062,
+          "tokens_seen": 154527
+        },
+        {
+          "step": 110,
+          "training_loss": 1.4666717052459717,
+          "tokens_seen": 170013
+        },
+        {
+          "step": 120,
+          "training_loss": 1.2726142406463623,
+          "tokens_seen": 185400
+        }
+      ]
+    },
+    {
+      "arm": "deep-same-params",
+      "seed": 11,
+      "steps": 120,
+      "batch_size": 16,
+      "tokens_seen": 185566,
+      "elapsed_seconds": 28.271,
+      "parameter_counts": {
+        "total": 578976,
+        "distinct_block_parameters": 553920,
+        "block_applications_per_token": 5,
+        "deep_block_equivalent_parameters": 553920
+      },
+      "before": {
+        "target_loss": 5.522264470564807,
+        "target_perplexity": 250.20096890938163,
+        "target_byte_accuracy": 0.01934398654331371,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 0.26312749752474446,
+        "target_perplexity": 1.300992581711833,
+        "target_byte_accuracy": 0.8822539949537427,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.53702449798584,
+          "tokens_seen": 1541
+        },
+        {
+          "step": 10,
+          "training_loss": 3.7385404109954834,
+          "tokens_seen": 15512
+        },
+        {
+          "step": 20,
+          "training_loss": 2.956040859222412,
+          "tokens_seen": 30951
+        },
+        {
+          "step": 30,
+          "training_loss": 2.384899854660034,
+          "tokens_seen": 46510
+        },
+        {
+          "step": 40,
+          "training_loss": 1.7647004127502441,
+          "tokens_seen": 61996
+        },
+        {
+          "step": 50,
+          "training_loss": 1.26054048538208,
+          "tokens_seen": 77335
+        },
+        {
+          "step": 60,
+          "training_loss": 0.8113820552825928,
+          "tokens_seen": 92822
+        },
+        {
+          "step": 70,
+          "training_loss": 0.4749731719493866,
+          "tokens_seen": 108312
+        },
+        {
+          "step": 80,
+          "training_loss": 0.34842604398727417,
+          "tokens_seen": 123823
+        },
+        {
+          "step": 90,
+          "training_loss": 0.2473912239074707,
+          "tokens_seen": 139285
+        },
+        {
+          "step": 100,
+          "training_loss": 0.2531900703907013,
+          "tokens_seen": 154707
+        },
+        {
+          "step": 110,
+          "training_loss": 0.2232181876897812,
+          "tokens_seen": 170145
+        },
+        {
+          "step": 120,
+          "training_loss": 0.18340086936950684,
+          "tokens_seen": 185566
+        }
+      ]
+    },
+    {
+      "arm": "deep-same-params",
+      "seed": 22,
+      "steps": 120,
+      "batch_size": 16,
+      "tokens_seen": 185400,
+      "elapsed_seconds": 59.459,
+      "parameter_counts": {
+        "total": 578976,
+        "distinct_block_parameters": 553920,
+        "block_applications_per_token": 5,
+        "deep_block_equivalent_parameters": 553920
+      },
+      "before": {
+        "target_loss": 5.554435111141044,
+        "target_perplexity": 258.3809667587132,
+        "target_byte_accuracy": 0.028764805414551606,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 0.2688074498164527,
+        "target_perplexity": 1.3084031835168708,
+        "target_byte_accuracy": 0.883248730964467,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.5530829429626465,
+          "tokens_seen": 1553
+        },
+        {
+          "step": 10,
+          "training_loss": 3.7321505546569824,
+          "tokens_seen": 15444
+        },
+        {
+          "step": 20,
+          "training_loss": 2.8593826293945312,
+          "tokens_seen": 30858
+        },
+        {
+          "step": 30,
+          "training_loss": 2.124704360961914,
+          "tokens_seen": 46358
+        },
+        {
+          "step": 40,
+          "training_loss": 1.5949448347091675,
+          "tokens_seen": 61826
+        },
+        {
+          "step": 50,
+          "training_loss": 1.0648386478424072,
+          "tokens_seen": 77335
+        },
+        {
+          "step": 60,
+          "training_loss": 0.7045566439628601,
+          "tokens_seen": 92791
+        },
+        {
+          "step": 70,
+          "training_loss": 0.40717843174934387,
+          "tokens_seen": 108252
+        },
+        {
+          "step": 80,
+          "training_loss": 0.29001474380493164,
+          "tokens_seen": 123713
+        },
+        {
+          "step": 90,
+          "training_loss": 0.224415123462677,
+          "tokens_seen": 139209
+        },
+        {
+          "step": 100,
+          "training_loss": 0.22823606431484222,
+          "tokens_seen": 154527
+        },
+        {
+          "step": 110,
+          "training_loss": 0.20357085764408112,
+          "tokens_seen": 170013
+        },
+        {
+          "step": 120,
+          "training_loss": 0.1785111278295517,
+          "tokens_seen": 185400
+        }
+      ]
+    },
+    {
+      "arm": "deep-same-applications",
+      "seed": 11,
+      "steps": 120,
+      "batch_size": 16,
+      "tokens_seen": 185566,
+      "elapsed_seconds": 85.543,
+      "parameter_counts": {
+        "total": 911328,
+        "distinct_block_parameters": 886272,
+        "block_applications_per_token": 8,
+        "deep_block_equivalent_parameters": 886272
+      },
+      "before": {
+        "target_loss": 5.619209436933166,
+        "target_perplexity": 275.6713614691982,
+        "target_byte_accuracy": 0.00336417157275021,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 0.26733222839076315,
+        "target_perplexity": 1.3064744221319597,
+        "target_byte_accuracy": 0.883515559293524,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.613917350769043,
+          "tokens_seen": 1541
+        },
+        {
+          "step": 10,
+          "training_loss": 3.749307632446289,
+          "tokens_seen": 15512
+        },
+        {
+          "step": 20,
+          "training_loss": 3.314070224761963,
+          "tokens_seen": 30951
+        },
+        {
+          "step": 30,
+          "training_loss": 2.8591320514678955,
+          "tokens_seen": 46510
+        },
+        {
+          "step": 40,
+          "training_loss": 2.4215619564056396,
+          "tokens_seen": 61996
+        },
+        {
+          "step": 50,
+          "training_loss": 1.9539581537246704,
+          "tokens_seen": 77335
+        },
+        {
+          "step": 60,
+          "training_loss": 1.597352385520935,
+          "tokens_seen": 92822
+        },
+        {
+          "step": 70,
+          "training_loss": 1.1389588117599487,
+          "tokens_seen": 108312
+        },
+        {
+          "step": 80,
+          "training_loss": 0.7762454748153687,
+          "tokens_seen": 123823
+        },
+        {
+          "step": 90,
+          "training_loss": 0.46337029337882996,
+          "tokens_seen": 139285
+        },
+        {
+          "step": 100,
+          "training_loss": 0.3109959363937378,
+          "tokens_seen": 154707
+        },
+        {
+          "step": 110,
+          "training_loss": 0.26092371344566345,
+          "tokens_seen": 170145
+        },
+        {
+          "step": 120,
+          "training_loss": 0.20152603089809418,
+          "tokens_seen": 185566
+        }
+      ]
+    },
+    {
+      "arm": "deep-same-applications",
+      "seed": 22,
+      "steps": 120,
+      "batch_size": 16,
+      "tokens_seen": 185400,
+      "elapsed_seconds": 42.173,
+      "parameter_counts": {
+        "total": 911328,
+        "distinct_block_parameters": 886272,
+        "block_applications_per_token": 8,
+        "deep_block_equivalent_parameters": 886272
+      },
+      "before": {
+        "target_loss": 5.505841426437882,
+        "target_perplexity": 246.12546504835782,
+        "target_byte_accuracy": 0.03680203045685279,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 0.3305478978844189,
+        "target_perplexity": 1.3917304457756108,
+        "target_byte_accuracy": 0.8654822335025381,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.498076438903809,
+          "tokens_seen": 1553
+        },
+        {
+          "step": 10,
+          "training_loss": 3.8043601512908936,
+          "tokens_seen": 15444
+        },
+        {
+          "step": 20,
+          "training_loss": 3.2252285480499268,
+          "tokens_seen": 30858
+        },
+        {
+          "step": 30,
+          "training_loss": 3.029629707336426,
+          "tokens_seen": 46358
+        },
+        {
+          "step": 40,
+          "training_loss": 2.6241486072540283,
+          "tokens_seen": 61826
+        },
+        {
+          "step": 50,
+          "training_loss": 2.1060009002685547,
+          "tokens_seen": 77335
+        },
+        {
+          "step": 60,
+          "training_loss": 1.7966554164886475,
+          "tokens_seen": 92791
+        },
+        {
+          "step": 70,
+          "training_loss": 1.3312618732452393,
+          "tokens_seen": 108252
+        },
+        {
+          "step": 80,
+          "training_loss": 1.0148568153381348,
+          "tokens_seen": 123713
+        },
+        {
+          "step": 90,
+          "training_loss": 0.7944321632385254,
+          "tokens_seen": 139209
+        },
+        {
+          "step": 100,
+          "training_loss": 0.5072921514511108,
+          "tokens_seen": 154527
+        },
+        {
+          "step": 110,
+          "training_loss": 0.32546699047088623,
+          "tokens_seen": 170013
+        },
+        {
+          "step": 120,
+          "training_loss": 0.24493838846683502,
+          "tokens_seen": 185400
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "config": {
+    "active_loops": null,
+    "cycles": 3,
+    "eval_per_family": 2,
+    "expand_on_master": false,
+    "families_ladder": [
+      "reverse"
+    ],
+    "fine_tune_batch_size": 8,
+    "fine_tune_steps": 24,
+    "learning_rate": 0.0001,
+    "max_new_tokens": 64,
+    "per_family": 4,
+    "proposals_per_task": 16,
+    "seed": 73,
+    "target_pass_rate": 1.0,
+    "temperature": 0.8
+  },
+  "cycles": [
+    {
+      "checkpoint": {
+        "path": "runs\\self-improve-reverse-001\\checkpoint-cycle-01",
+        "weights_sha256": "8b874911763a00197009f55768680330cb8c5b062353a20de82857b1a2fb6c97"
+      },
+      "cycle": 1,
+      "evaluation": {
+        "episodes": [
+          {
+            "completion": "\n    return text[::-1]\n",
+            "family": "reverse",
+            "passed": true,
+            "status": "passed",
+            "task_id": "dev-reverse-000",
+            "tests_passed": 3
+          },
+          {
+            "completion": "\n    return text[::-1]\n",
+            "family": "reverse",
+            "passed": true,
+            "status": "passed",
+            "task_id": "dev-reverse-001",
+            "tests_passed": 3
+          }
+        ],
+        "pass_rate": 1.0,
+        "solved": 2,
+        "tasks": 2
+      },
+      "families": [
+        "reverse"
+      ],
+      "fine_tune": {
+        "curve": [
+          {
+            "loss": 4.7601318359375,
+            "step": 1,
+            "tokens": 880
+          },
+          {
+            "loss": 3.849212408065796,
+            "step": 2,
+            "tokens": 880
+          },
+          {
+            "loss": 3.318486213684082,
+            "step": 3,
+            "tokens": 880
+          },
+          {
+            "loss": 2.906430244445801,
+            "step": 4,
+            "tokens": 880
+          },
+          {
+            "loss": 2.5801711082458496,
+            "step": 5,
+            "tokens": 880
+          },
+          {
+            "loss": 2.3403546810150146,
+            "step": 6,
+            "tokens": 880
+          },
+          {
+            "loss": 2.137704610824585,
+            "step": 7,
+            "tokens": 880
+          },
+          {
+            "loss": 1.9721324443817139,
+            "step": 8,
+            "tokens": 880
+          },
+          {
+            "loss": 1.8066493272781372,
+            "step": 9,
+            "tokens": 880
+          },
+          {
+            "loss": 1.6225563287734985,
+            "step": 10,
+            "tokens": 880
+          },
+          {
+            "loss": 1.4481441974639893,
+            "step": 11,
+            "tokens": 880
+          },
+          {
+            "loss": 1.2854316234588623,
+            "step": 12,
+            "tokens": 880
+          },
+          {
+            "loss": 1.129733681678772,
+            "step": 13,
+            "tokens": 880
+          },
+          {
+            "loss": 0.9803135395050049,
+            "step": 14,
+            "tokens": 880
+          },
+          {
+            "loss": 0.8536142110824585,
+            "step": 15,
+            "tokens": 880
+          },
+          {
+            "loss": 0.7453579306602478,
+            "step": 16,
+            "tokens": 880
+          },
+          {
+            "loss": 0.6507364511489868,
+            "step": 17,
+            "tokens": 880
+          },
+          {
+            "loss": 0.5615720152854919,
+            "step": 18,
+            "tokens": 880
+          },
+          {
+            "loss": 0.4760589897632599,
+            "step": 19,
+            "tokens": 880
+          },
+          {
+            "loss": 0.40225300192832947,
+            "step": 20,
+            "tokens": 880
+          },
+          {
+            "loss": 0.3424595892429352,
+            "step": 21,
+            "tokens": 880
+          },
+          {
+            "loss": 0.28979408740997314,
+            "step": 22,
+            "tokens": 880
+          },
+          {
+            "loss": 0.24024264514446259,
+            "step": 23,
+            "tokens": 880
+          },
+          {
+            "loss": 0.19716568291187286,
+            "step": 24,
+            "tokens": 880
+          }
+        ],
+        "steps": 24
+      },
+      "pass_rate_after": 1.0,
+      "pass_rate_before": 1.0,
+      "proposal_details": [
+        {
+          "family": "reverse",
+          "passed": 5,
+          "proposals": 16,
+          "task_id": "rl-reverse-000"
+        },
+        {
+          "family": "reverse",
+          "passed": 5,
+          "proposals": 16,
+          "task_id": "rl-reverse-001"
+        },
+        {
+          "family": "reverse",
+          "passed": 7,
+          "proposals": 16,
+          "task_id": "rl-reverse-002"
+        },
+        {
+          "family": "reverse",
+          "passed": 6,
+          "proposals": 16,
+          "task_id": "rl-reverse-003"
+        }
+      ],
+      "seconds": 40.982,
+      "verified_pairs_added": 4,
+      "verified_pairs_total": 4
+    }
+  ],
+  "device": "cpu",
+  "elapsed_seconds": 40.982,
+  "initial_checkpoint": {
+    "path": "runs\\self-improve-reverse-001\\checkpoint-cycle-00",
+    "weights_sha256": "f42b57381d4cf40b965251bb808db54827bf2ef4f5c05c96980220aba5e3a449"
+  },
+  "schema_version": "1.0",
+  "stage": "recursive_self_improvement",
+  "status": "complete",
+  "verified_memory_final_size": 4
+}

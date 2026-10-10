@@ -1,0 +1,323 @@
+{
+  "schema_version": "1.0",
+  "status": "complete",
+  "research_question": "Do learned depth policies (exit gate, router) beat a fixed loop at matched compute?",
+  "arms": {
+    "fixed": {
+      "vocab_size": 260,
+      "dim": 96,
+      "heads": 3,
+      "mlp_hidden": 256,
+      "first_blocks": 1,
+      "stack_blocks": 3,
+      "last_blocks": 1,
+      "loops": 2,
+      "depth_policy": "fixed",
+      "inject_input": true,
+      "exit_threshold": 0.5,
+      "max_sequence_length": 128,
+      "rope_base": 10000.0
+    },
+    "exit-gate": {
+      "vocab_size": 260,
+      "dim": 96,
+      "heads": 3,
+      "mlp_hidden": 256,
+      "first_blocks": 1,
+      "stack_blocks": 3,
+      "last_blocks": 1,
+      "loops": 2,
+      "depth_policy": "exit_gate",
+      "inject_input": true,
+      "exit_threshold": 0.5,
+      "max_sequence_length": 128,
+      "rope_base": 10000.0
+    },
+    "router": {
+      "vocab_size": 260,
+      "dim": 96,
+      "heads": 3,
+      "mlp_hidden": 256,
+      "first_blocks": 1,
+      "stack_blocks": 3,
+      "last_blocks": 1,
+      "loops": 2,
+      "depth_policy": "router",
+      "inject_input": true,
+      "exit_threshold": 0.5,
+      "max_sequence_length": 128,
+      "rope_base": 10000.0
+    }
+  },
+  "structural_holdout": [
+    [
+      "neg",
+      "neg",
+      "add"
+    ],
+    [
+      "neg",
+      "add",
+      "abs"
+    ],
+    [
+      "sub",
+      "neg",
+      "add"
+    ],
+    [
+      "sub",
+      "sub",
+      "mul"
+    ],
+    [
+      "abs",
+      "sub",
+      "neg"
+    ],
+    [
+      "abs",
+      "sub",
+      "sub"
+    ],
+    [
+      "sub",
+      "add",
+      "neg"
+    ],
+    [
+      "abs",
+      "add",
+      "neg"
+    ],
+    [
+      "add",
+      "abs",
+      "abs"
+    ],
+    [
+      "neg",
+      "add",
+      "add"
+    ],
+    [
+      "sub",
+      "add",
+      "mul"
+    ],
+    [
+      "abs",
+      "mul",
+      "add"
+    ],
+    [
+      "neg",
+      "neg",
+      "abs"
+    ],
+    [
+      "add",
+      "abs",
+      "mul"
+    ],
+    [
+      "neg",
+      "mul",
+      "add"
+    ],
+    [
+      "abs",
+      "neg",
+      "add"
+    ],
+    [
+      "add",
+      "abs",
+      "neg"
+    ],
+    [
+      "abs",
+      "abs",
+      "mul"
+    ],
+    [
+      "neg",
+      "sub",
+      "add"
+    ],
+    [
+      "sub",
+      "mul",
+      "mul"
+    ],
+    [
+      "abs",
+      "neg",
+      "sub"
+    ],
+    [
+      "mul",
+      "neg",
+      "neg"
+    ],
+    [
+      "abs",
+      "neg",
+      "mul"
+    ],
+    [
+      "add",
+      "sub",
+      "neg"
+    ],
+    [
+      "add",
+      "abs",
+      "sub"
+    ],
+    [
+      "sub",
+      "sub",
+      "neg"
+    ],
+    [
+      "add",
+      "mul",
+      "abs"
+    ],
+    [
+      "neg",
+      "add",
+      "neg"
+    ],
+    [
+      "mul",
+      "mul",
+      "abs"
+    ],
+    [
+      "mul",
+      "mul",
+      "sub"
+    ],
+    [
+      "mul",
+      "add",
+      "add"
+    ],
+    [
+      "mul",
+      "neg",
+      "add"
+    ]
+  ],
+  "device": "cpu",
+  "steps": 2,
+  "batch_size": 4,
+  "learning_rate": 0.002,
+  "seeds": [
+    11
+  ],
+  "elapsed_seconds": 5.622,
+  "runs": [
+    {
+      "arm": "fixed",
+      "seed": 11,
+      "steps": 2,
+      "batch_size": 4,
+      "tokens_seen": 787,
+      "elapsed_seconds": 1.093,
+      "parameter_counts": {
+        "total": 597408,
+        "distinct_block_parameters": 553920,
+        "block_applications_per_token": 8,
+        "deep_block_equivalent_parameters": 1107840
+      },
+      "before": {
+        "target_loss": 5.632235305664216,
+        "target_perplexity": 279.2857093423749,
+        "target_byte_accuracy": 0.0054667788057190915,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 5.044658574664964,
+        "target_perplexity": 155.19130390897587,
+        "target_byte_accuracy": 0.17115222876366695,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.638118743896484,
+          "tokens_seen": 399
+        }
+      ]
+    },
+    {
+      "arm": "exit-gate",
+      "seed": 11,
+      "steps": 2,
+      "batch_size": 4,
+      "tokens_seen": 787,
+      "elapsed_seconds": 1.216,
+      "parameter_counts": {
+        "total": 597505,
+        "distinct_block_parameters": 553920,
+        "block_applications_per_token": 8,
+        "deep_block_equivalent_parameters": 1107840
+      },
+      "before": {
+        "target_loss": 5.574756117404459,
+        "target_perplexity": 263.68523955384296,
+        "target_byte_accuracy": 0.006307821698906644,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 4.992057341903673,
+        "target_perplexity": 147.23903313593817,
+        "target_byte_accuracy": 0.17115222876366695,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.588771343231201,
+          "tokens_seen": 399
+        }
+      ]
+    },
+    {
+      "arm": "router",
+      "seed": 11,
+      "steps": 2,
+      "batch_size": 4,
+      "tokens_seen": 787,
+      "elapsed_seconds": 1.052,
+      "parameter_counts": {
+        "total": 597602,
+        "distinct_block_parameters": 553920,
+        "block_applications_per_token": 8,
+        "deep_block_equivalent_parameters": 1107840
+      },
+      "before": {
+        "target_loss": 5.633147110750537,
+        "target_perplexity": 279.5404796054497,
+        "target_byte_accuracy": 0.0,
+        "target_exact_accuracy": 0.0
+      },
+      "after": {
+        "target_loss": 4.981847374854317,
+        "target_perplexity": 145.74337575819473,
+        "target_byte_accuracy": 0.17115222876366695,
+        "target_exact_accuracy": 0.0
+      },
+      "training_curve": [
+        {
+          "step": 1,
+          "training_loss": 5.616177082061768,
+          "tokens_seen": 399
+        }
+      ]
+    }
+  ]
+}

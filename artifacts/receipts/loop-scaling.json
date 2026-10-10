@@ -1,0 +1,31 @@
+{
+  "checkpoint": "runs\\coding-sft-001\\checkpoint-0060",
+  "curve": [
+    {
+      "loops": 1,
+      "pass_rate": 0.25,
+      "seconds": 5.246,
+      "solved": 2,
+      "tasks": 8,
+      "valid_programs": 5
+    },
+    {
+      "loops": 2,
+      "pass_rate": 0.875,
+      "seconds": 4.091,
+      "solved": 7,
+      "tasks": 8,
+      "valid_programs": 7
+    }
+  ],
+  "device": "cpu",
+  "elapsed_seconds": 9.338,
+  "families": "all",
+  "max_loops": 2,
+  "per_family": 1,
+  "schema_version": "1.0",
+  "seed": 2026,
+  "split": "confirm",
+  "stage": "loop_scaling",
+  "status": "complete"
+}

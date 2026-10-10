@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Looped Transformers — a mini GPT-6 Astra, from scratch</title>
+<style>
+  :root { --bg:#171714; --ink:#f4f0e8; --muted:#aaa69d; --grid:#353530;
+          --accent:#d97757; --accent2:#7aa2c9; --accent3:#9eb67b; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { height:100%; }
+  body { background:var(--bg); color:var(--ink); font-family:"Segoe UI",Arial,sans-serif; overflow:hidden; }
+  .slide { position:absolute; inset:0; display:none; flex-direction:column; justify-content:center;
+           align-items:center; padding:6vh 10vw; text-align:center; }
+  .slide.active { display:flex; animation:fade .35s ease; }
+  @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  h1 { font-size:3rem; line-height:1.15; margin-bottom:1.2rem; }
+  h1 .hl, h2 .hl { color:var(--accent); }
+  h2 { font-size:2.1rem; margin-bottom:1.4rem; }
+  p.lead { font-size:1.22rem; color:var(--muted); max-width:62ch; }
+  ul.points { text-align:left; font-size:1.12rem; line-height:1.9; max-width:64ch; }
+  ul.points li::marker { color:var(--accent); }
+  code { background:#242420; border-radius:4px; padding:.1em .4em; font-family:Consolas,monospace;
+         font-size:.92em; color:var(--accent3); }
+  pre.terminal { background:#0e0e0c; border:1px solid var(--grid); border-radius:10px;
+    padding:1.1rem 1.4rem; text-align:left; font-family:Consolas,monospace; font-size:.92rem;
+    line-height:1.7; color:var(--accent3); max-width:70ch; overflow-x:auto; white-space:pre; }
+  .diagram { font-family:Consolas,monospace; font-size:1rem; line-height:1.85; text-align:left;
+    color:var(--accent3); background:#0e0e0c; border:1px solid var(--grid);
+    border-radius:10px; padding:1.2rem 1.6rem; }
+  .diagram b { color:var(--accent); }
+  table.compare { border-collapse:collapse; font-size:.98rem; margin-top:.6rem; }
+  table.compare th, table.compare td { border:1px solid var(--grid); padding:.5rem 1.1rem; }
+  table.compare th { color:var(--muted); font-weight:600; }
+  table.compare td:last-child { color:var(--accent); font-weight:700; }
+  img.chart { max-width:76vw; max-height:58vh; border-radius:12px; border:1px solid var(--grid); }
+  .badge { display:inline-block; border:1px solid var(--accent); color:var(--accent); border-radius:999px;
+    padding:.25rem .9rem; font-size:.82rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:1.6rem; }
+  #progress { position:fixed; top:0; left:0; height:3px; background:var(--accent); width:0; z-index:10; }
+  #counter { position:fixed; bottom:14px; right:20px; color:var(--muted); font-size:.85rem; }
+  #hint { position:fixed; bottom:14px; left:20px; color:var(--muted); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck">
+
+<section class="slide">
+  <div class="badge">course</div>
+  <h1>Looped Transformers<br><span class="hl">Recurrent Depth</span>, From Scratch</h1>
+  <p class="lead">The architecture trick reported behind GPT-6 Astra: run the same blocks twice. Extra thinking per token, zero extra weights — built, trained, and measured at teaching scale.</p>
+</section>
+
+<section class="slide">
+  <h2>The idea in one picture</h2>
+  <div class="diagram">
+conventional:  B1 → B2 → ... → B6                <b>6 apps, 6 weight sets</b><br>
+looped:        [B1 → ... → B6] → [B1 → ... → B6]  <b>12 apps, still 6 sets</b><br><br>
+         first block → <b>LOOP</b> → last block     (MoR sandwich)<br>
+         each pass re-injects the anchor         (latent reasoning)
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Who does this?</h2>
+  <table class="compare">
+    <tr><th>Model</th><th>Shared blocks</th><th>Passes</th><th>Applications</th></tr>
+    <tr><td>Nanbeige4.2-3B</td><td>22</td><td>2</td><td>44</td></tr>
+    <tr><td>Ouro-2.6B-Thinking</td><td>48</td><td>4 + exit gate</td><td>192</td></tr>
+    <tr><td>Latent reasoning (Geiping)</td><td>4 (sandwiched)</td><td>up to 64</td><td>variable</td></tr>
+    <tr><td>Mixture-of-Recursions</td><td>recursion block</td><td>per token (router)</td><td>adaptive</td></tr>
+    <tr><td>GPT-6 Astra (rumored)</td><td colspan="2" style="color:var(--muted)">"recurrent depth"</td><td>?</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Looping is depth, not time</h2>
+  <ul class="points">
+    <li><b>RNNs</b> reuse weights across <i>time steps</i> — one token at a time, hidden state carried forward.</li>
+    <li><b>Looped transformers</b> reuse weights across <i>depth</i> — every token's representation passes the stack repeatedly; attention still sees the whole context on every pass.</li>
+    <li>Same trick as "make the model deeper", minus the parameter bill.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>This implementation</h2>
+  <div class="diagram">
+bytes → embedding → <b>first block</b>          (Layer 0)<br>
+        anchor = its output<br>
+        <b>LOOP ×2</b>: state = proj([anchor ; state])<br>
+                     state = shared stack ×6    (same weights)<br>
+        policy picks each position's pass:<br>
+        <b>fixed</b> · <b>exit gate</b> · <b>router</b><br>
+        <b>last block</b> → RMSNorm → tied head
+  </div>
+  <p class="lead" style="margin-top:1rem">16 block applications, 8 distinct blocks, ~14.6M parameters.</p>
+</section>
+
+<section class="slide">
+  <h2>Three ways to choose the depth</h2>
+  <ul class="points">
+    <li><b>fixed</b> — Nanbeige: every position takes the final pass.</li>
+    <li><b>exit gate</b> — Ouro / Universal Transformer: cumulative exit probability crosses a threshold → halt and read that pass (train soft, infer hard).</li>
+    <li><b>router</b> — MoR token-choice: one routing decision per position, up front.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>The KV cache does not shrink</h2>
+  <ul class="points">
+    <li>Pass 2 sees different inputs than pass 1 → block 1's keys differ per pass.</li>
+    <li>Separate caches per (pass, block) — a 2-loop model caches like 2N blocks.</li>
+    <li>Nanbeige tried sharing: half the memory, worse quality. We implement separate.</li>
+    <li>Proven in tests: cached decoding ≡ full recomputation, exactly.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Train it with random loop counts</h2>
+  <pre class="terminal">run_cpu.bat scripts\train_pretrain.py --output runs\pretrain-001 ^
+  --steps 150 --batch-size 16 <b>--randomize-loops</b> --seed 42</pre>
+  <p class="lead" style="margin-top:1rem">Latent-reasoning style: the model learns to work at any loop budget, so you can spend more compute per token at inference.</p>
+</section>
+
+<section class="slide">
+  <h2>Test-time loop scaling</h2>
+  <img class="chart" src="../artifacts/charts/loop-scaling.svg" alt="loop scaling"
+       onerror="this.style.display='none'">
+  <p class="lead">Same checkpoint, more loops per token — the inference-time compute dial.</p>
+</section>
+
+<section class="slide">
+  <h2>Looped vs deep, both directions</h2>
+  <img class="chart" src="../artifacts/charts/looped-vs-deep.svg" alt="looped vs deep"
+       onerror="this.style.display='none'">
+  <ul class="points">
+    <li><b>param-matched</b>: same blocks, looped runs them twice.</li>
+    <li><b>application-matched</b>: same compute, deep owns twice the blocks.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>What the research says</h2>
+  <ul class="points">
+    <li><b>Reasoning improves</b> with looping; <b>knowledge storage does not</b> (Virtual Logic Depth).</li>
+    <li><b>Matched compute favors looping at scale</b> — SMELT: 6.8–18% training-compute savings; tiny models prefer vanilla (MoR Fig 11).</li>
+    <li>Latent feedback can shorten reasoning traces in base models (Full-bandwidth).</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Does looping hide chains of thought?</h2>
+  <p class="lead">No — looping adds computation <i>inside</i> the forward pass; chains of thought are <i>tokens</i>. Fewer tokens at fixed accuracy is a capability effect, and the trace never fully described the computation anyway. (Raschka, §5.)</p>
+</section>
+
+<section class="slide">
+  <h2>Auditable by construction</h2>
+  <ul class="points">
+    <li>Versioned JSON receipts with SHA-256 weight hashes for every run.</li>
+    <li>Deterministic seeds from pure integer hashes; fail-closed checkpoints.</li>
+    <li>30 tests: weight sharing, causality, cache equivalence, policies, verifier.</li>
+  </ul>
+  <pre class="terminal">run_cpu.bat experiments\looped_vs_deep.py --output artifacts\experiments\looped-vs-deep</pre>
+</section>
+
+<section class="slide">
+  <h2>Limitations, stated plainly</h2>
+  <ul class="points">
+    <li>~14.6M parameters, 192-byte context, synthetic programs.</li>
+    <li>Tiny scale often prefers vanilla depth — we report whatever lands.</li>
+    <li>No compute savings from policies (all passes run); KV sharing is future work.</li>
+  </ul>
+  <p class="lead" style="margin-top:1.4rem">Build it, measure it, report it.</p>
+</section>
+
+</div>
+<div id="counter"></div>
+<div id="hint">← → or Space to navigate</div>
+<script>
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  let index = 0;
+  function show(next) {
+    index = Math.max(0, Math.min(slides.length - 1, next));
+    slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
+    document.getElementById("counter").textContent = `${index + 1} / ${slides.length}`;
+    document.getElementById("progress").style.width = `${(index + 1) / slides.length * 100}%`;
+  }
+  document.addEventListener("keydown", (event) => {
+    if (["ArrowRight", " ", "PageDown"].includes(event.key)) { show(index + 1); event.preventDefault(); }
+    if (["ArrowLeft", "PageUp"].includes(event.key)) { show(index - 1); event.preventDefault(); }
+    if (event.key === "Home") show(0);
+    if (event.key === "End") show(slides.length - 1);
+  });
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("a, pre, img")) return;
+    show(index + 1);
+  });
+  show(0);
+</script>
+</body>
+</html>

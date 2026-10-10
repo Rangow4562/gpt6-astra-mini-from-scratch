@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560">
+<rect width="100%" height="100%" fill="#171714"/>
+<text x="90" y="40" fill="#f4f0e8" font-family="Arial" font-size="25" font-weight="700">Looped vs deep at matched budgets</text>
+<text x="90" y="64" fill="#aaa69d" font-family="Arial" font-size="14">Param-matched: looped has 2x compute. Application-matched: deep has 2x params.</text>
+<line x1="90" y1="440.0" x2="880" y2="440.0" stroke="#353530"/>
+<text x="78" y="445.0" fill="#aaa69d" text-anchor="end" font-family="Arial" font-size="13">0</text>
+<line x1="90" y1="368.0" x2="880" y2="368.0" stroke="#353530"/>
+<text x="78" y="373.0" fill="#aaa69d" text-anchor="end" font-family="Arial" font-size="13">20</text>
+<line x1="90" y1="296.0" x2="880" y2="296.0" stroke="#353530"/>
+<text x="78" y="301.0" fill="#aaa69d" text-anchor="end" font-family="Arial" font-size="13">40</text>
+<line x1="90" y1="224.0" x2="880" y2="224.0" stroke="#353530"/>
+<text x="78" y="229.0" fill="#aaa69d" text-anchor="end" font-family="Arial" font-size="13">60</text>
+<line x1="90" y1="152.0" x2="880" y2="152.0" stroke="#353530"/>
+<text x="78" y="157.0" fill="#aaa69d" text-anchor="end" font-family="Arial" font-size="13">80</text>
+<line x1="90" y1="80.0" x2="880" y2="80.0" stroke="#353530"/>
+<text x="78" y="85.0" fill="#aaa69d" text-anchor="end" font-family="Arial" font-size="13">100</text>
+<rect x="151.7" y="125.2" width="132.0" height="314.8" rx="6" fill="#d97757"/>
+<text x="217.7" y="115.2" fill="#f4f0e8" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700">87.4499</text>
+<text x="217.7" y="464" fill="#aaa69d" text-anchor="middle" font-family="Arial" font-size="12">87.4%</text>
+<text x="221.7" y="486" fill="#f4f0e8" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700">deep-same-applications</text>
+<rect x="415.0" y="122.2" width="132.0" height="317.8" rx="6" fill="#d97757"/>
+<text x="481.0" y="112.2" fill="#f4f0e8" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700">88.2751</text>
+<text x="481.0" y="464" fill="#aaa69d" text-anchor="middle" font-family="Arial" font-size="12">88.3%</text>
+<text x="485.0" y="486" fill="#f4f0e8" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700">deep-same-params</text>
+<rect x="678.3" y="199.5" width="132.0" height="240.5" rx="6" fill="#d97757"/>
+<text x="744.3" y="189.5" fill="#f4f0e8" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700">66.8094</text>
+<text x="744.3" y="464" fill="#aaa69d" text-anchor="middle" font-family="Arial" font-size="12">66.8%</text>
+<text x="748.3" y="486" fill="#f4f0e8" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700">looped-2x</text>
+<text x="22" y="260" fill="#aaa69d" font-family="Arial" font-size="14" transform="rotate(-90 22 260)">Held-out byte accuracy (%)</text>
+</svg>

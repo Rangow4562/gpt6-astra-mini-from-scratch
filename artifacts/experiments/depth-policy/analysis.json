@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "source": "artifacts\\experiments\\depth-policy\\results.json",
+  "metric": "target_byte_accuracy",
+  "comparisons": [
+    {
+      "arm": "fixed",
+      "baseline": "exit-gate",
+      "seeds": [
+        11,
+        22
+      ],
+      "arm_values": [
+        0.8036164844407064,
+        0.5325719120135364
+      ],
+      "baseline_values": [
+        0.6728343145500421,
+        0.6040609137055838
+      ],
+      "mean_difference": 0.02964658409930848,
+      "exact_sign_test_p": 1.0,
+      "holm_adjusted_p": 1.0
+    },
+    {
+      "arm": "router",
+      "baseline": "exit-gate",
+      "seeds": [
+        11,
+        22
+      ],
+      "arm_values": [
+        0.5571909167367536,
+        0.760575296108291
+      ],
+      "baseline_values": [
+        0.6728343145500421,
+        0.6040609137055838
+      ],
+      "mean_difference": 0.020435492294709368,
+      "exact_sign_test_p": 1.0,
+      "holm_adjusted_p": 1.0
+    }
+  ],
+  "note": "Seed-level exact sign test; small seed counts make p-values descriptive only."
+}

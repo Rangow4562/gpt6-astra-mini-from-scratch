@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "source": "artifacts\\experiments\\looped-vs-deep\\results.json",
+  "metric": "target_byte_accuracy",
+  "comparisons": [
+    {
+      "arm": "deep-same-applications",
+      "baseline": "deep-same-params",
+      "seeds": [
+        11,
+        22
+      ],
+      "arm_values": [
+        0.883515559293524,
+        0.8654822335025381
+      ],
+      "baseline_values": [
+        0.8822539949537427,
+        0.883248730964467
+      ],
+      "mean_difference": -0.008252466561073812,
+      "exact_sign_test_p": 1.0,
+      "holm_adjusted_p": 1.0
+    },
+    {
+      "arm": "looped-2x",
+      "baseline": "deep-same-params",
+      "seeds": [
+        11,
+        22
+      ],
+      "arm_values": [
+        0.8036164844407064,
+        0.5325719120135364
+      ],
+      "baseline_values": [
+        0.8822539949537427,
+        0.883248730964467
+      ],
+      "mean_difference": -0.21465716473198343,
+      "exact_sign_test_p": 0.5,
+      "holm_adjusted_p": 1.0
+    }
+  ],
+  "note": "Seed-level exact sign test; small seed counts make p-values descriptive only."
+}
